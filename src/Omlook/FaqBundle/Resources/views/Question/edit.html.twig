@@ -1,0 +1,18 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Edit question{% endblock %}
+
+{% block left_bar %}
+	<div class="span12">
+		<h1>Edit question</h1>
+		<form action="{{ path("question_edit", {"id":qt.id}) }}" method="post" id="cat-form">
+			{{ form_errors(form) }}
+			{{ form_row(form.category) }}
+			
+			{{ form_rest(form) }}
+			<br>
+			<input type="submit" class="btn btn-primary" name="submit" value="Confirm" />
+			<a class="btn btn-inverse" href="{{ path("question_index") }}">Cancel</a>
+		</form>
+	</div>
+{% endblock %}

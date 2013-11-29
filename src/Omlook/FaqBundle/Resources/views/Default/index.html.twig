@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+{% block title %}Home{% endblock %}
+
+{% block left_bar %}
+	{% include "OmlookFaqBundle:Default:_leftbar.html.twig" with { 'cats': cats } %}
+{% endblock %}
+        
+{% block right_bar %}
+	<div class="span9">
+		<div class="hero-unit">
+			<h1>Welcome!</h1>
+			<br>
+			<p>This is the FAQ system of OMLOOK.</p>
+			<hr>
+			<p>
+				Please choose the category from the left bar to find the questions. 
+				<br>Of course, you can choose 'All' to see all of the questions.
+			</p>
+			<hr>
+			<p>
+				For create, edit and delete <strong>questions</strong>, you can go to the link 'Question Admin' under 
+				the menu 'FAQ Admin'. Be carefull when you delete a question, all the answers belong
+				to this question will be deleted too.
+			</p>
+			<hr>
+			<p>
+				For create, edit and delete <strong>answers</strong>, you can go to the link 'Question Admin' under 
+				the menu 'FAQ Admin'. Then after each question, you can see the 'View Answer' link.
+			</p>
+			<hr>
+			<p>
+				For create, edit and delete <strong>the categories of questions</strong>, you can go to the link 'Category Admin' 
+				under the menu 'FAQ Admin'. Be carefull When you delete a category, the category of all the 
+				questions belong to this category will be set to 'Not set'.
+			</p>
+		</div>
+	</div>
+{% endblock %}

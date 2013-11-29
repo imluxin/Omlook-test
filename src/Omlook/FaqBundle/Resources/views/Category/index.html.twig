@@ -1,0 +1,46 @@
+{% extends '::base.html.twig' %}
+{% block title %}Categories of questions{% endblock %}
+
+{% block left_bar %}
+	<div class="span12">
+		<h1>List of categories of questions</h1>
+		{% if cats is empty %}
+			<div class="alert">
+			  <strong>Warning!</strong> There is no category exist.
+			</div>
+		{% else %}
+		
+		{% for message in app.session.flashbag.get('cat_success') %}
+			<div class="alert alert-success">
+			  <button type="button" class="close" data-dismiss="alert">&times;</button>
+			  <strong>Well done!</strong> {{ message }}
+			</div>
+		{% endfor %}
+		
+		<table class="table table-striped span6">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for k, cat in cats %}
+					<tr>
+						<td>{{ cat.name }}</td>
+						<td>
+							<a href="{{ path("category_edit", {'id':cat.id}) }}" class="btn btn-primary">Edit</a> 
+							<a href="#modal-{{ cat.id }}" role="button" class="btn btn-danger" data-toggle="modal">Delete</a>
+							{% include "OmlookFaqBundle::delete_confirm.html.twig" with { "modal_id": "modal-"~cat.id, "url": path("category_delete", {'id':cat.id}) } %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		
+		{% endif %}
+		<div class="span12">
+			<a class="btn btn-primary" href="{{ path('category_create') }}">Add a new category</a>
+		</div>
+	</div>
+{% endblock %}

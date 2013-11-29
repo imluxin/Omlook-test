@@ -1,0 +1,18 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}New category of questions{% endblock %}
+
+{% block left_bar %}
+	<div class="span12">
+		<h1>Create a new category of questions</h1>
+		<form action="{{ path('category_create') }}" method="post" id="cat-form">
+			{{ form_errors(form) }}
+			{{ form_label(form.name) }} {{ form_widget(form.name) }}
+			
+			{{ form_rest(form) }}
+			<br>
+			<input type="submit" class="btn btn-primary" name="submit" value="Confirm" />
+			<a class="btn btn-inverse" href="{{ path("category_index") }}">Cancel</a>
+		</form>
+	</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}{% endblock %} - FAQ - OMLOOK</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        
+        {# ---------------------- Stylesheets block ---------------------- #}
+        {% block stylesheets %}
+        	<link rel="stylesheet" href="{{ asset('bundles/omlookfaq/bootstrap/css/bootstrap.css') }}">
+	        <link rel="stylesheet" href="{{ asset('bundles/omlookfaq/bootstrap/css/bootstrap-responsive.css') }}" type="text/css" />
+	        <link rel="stylesheet" href="{{ asset('bundles/omlookfaq/css/main.css') }}" type="text/css" />
+        {% endblock %}
+        
+        {% block javascripts %}
+        	<script src="{{ asset('bundles/omlookfaq/js/jquery-1.10.2.min.js') }}"></script>
+        	<script src="{{ asset('bundles/omlookfaq/bootstrap/js/bootstrap.min.js') }}"></script>
+        {% endblock %}
+        
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}" />
+    </head>
+    <body>
+        {# MENU #}
+    	<div class="navbar navbar-inverse navbar-fixed-top">
+	    	<div class="navbar-inner">
+	        	<div class="container">
+	          		<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+	            		<span class="icon-bar"></span>
+	            		<span class="icon-bar"></span>
+	            		<span class="icon-bar"></span>
+	          		</button>
+	          		<a class="brand" href="{{ path('omlook_faq_homepage') }}">Omlook FAQ</a>
+	          		<div class="nav-collapse collapse">
+	            		<ul class="nav">
+	            			{% set controller = get_controller_name() %}
+	              			<li class="{% if controller == 'default' %}active{% endif %}"><a href="{{ path('omlook_faq_homepage') }}">Home</a></li>
+	              			<li class="dropdown {% if controller in [ 'question', 'category', 'answer' ] %}active{% endif %}">
+	                  			<a href="#" class="dropdown-toggle" data-toggle="dropdown">FAQ Admin <b class="caret"></b></a>
+	                  			<ul class="dropdown-menu">
+	                    			<li class="{% if controller == 'question' %}active{% endif %}"><a href="{{ path('question_index') }}">Question Admin</a></li>
+	                    			<li class="{% if controller == 'category' %}active{% endif %}"><a href="{{ path('category_index') }}">Category Admin</a></li>
+	                  			</ul>
+	                		</li>
+	            		</ul>
+	          		</div><!--/.nav-collapse -->
+        		</div>
+      		</div>
+    	</div>
+    	
+    	<div class="container">
+      		<div class="row">
+		        {% block body %}
+		        {% block left_bar %}{% endblock %}
+		        {% block right_bar %}{% endblock %}
+				{% endblock %}
+        	</div>
+	      	<hr>
+			  
+		    <footer>
+		    	{% block footer %}
+		        	<p>© Luxin YAO - <a mailto="luxin.yao@hotmail.com">luxin.yao@hotmail.com</a></p>
+		        {% endblock %}
+		    </footer>
+      	</div>
+    </body>
+</html>

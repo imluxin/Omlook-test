@@ -1,0 +1,22 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}New answer{% endblock %}
+
+{% block left_bar %}
+	<div class="span12">
+		<h3>Add a new answer for:</h3>
+		<div class="well">
+			{{ qt.content }}
+		</div>
+		<h3>Answer:</h3>
+		<form action="{{ path('answer_create', {'q_id': qt.id}) }}" method="post">
+			{{ form_errors(form) }}
+			{{ form_row(form.content) }}
+			
+			{{ form_rest(form) }}
+			<br>
+			<input type="submit" class="btn btn-primary" name="submit" value="Confirm" />
+			<a class="btn btn-inverse" href="{{ path("view_answers", {'q_id': qt.id}) }}">Cancel</a>
+		</form>
+	</div>
+{% endblock %}

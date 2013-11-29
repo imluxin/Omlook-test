@@ -1,0 +1,52 @@
+{% extends '::base.html.twig' %}
+{% block title %}Questions admin{% endblock %}
+
+{% block left_bar %}
+	<div class="span12">
+		<h1>List of questions</h1>
+		{% if questions is empty %}
+			<div class="alert">
+			  <strong>Warning!</strong> There is no question exist.
+			</div>
+		{% else %}
+		
+			{% for message in app.session.flashbag.get('qt_success') %}
+				<div class="alert alert-success">
+				  <button type="button" class="close" data-dismiss="alert">&times;</button>
+				  <strong>Well done!</strong> {{ message }}
+				</div>
+			{% endfor %}
+			
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Question</th>
+						<th>Category</th>
+						<th>Username</th>
+						<th>Visible</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for k, q in questions %}
+						<tr>
+							<td>{{ q.content }}</td>
+							<td>{% if q.category %}  {{ q.category.name }} {% else %} <span class="text-warning">Not set</span> {% endif %}</td>
+							<td>{{ q.username }}</td>
+							<td>{% include "OmlookFaqBundle::visible.html.twig" with { 'visible': q.visible } %}</td>
+							<td>
+								<a href="{{ path("view_answers", {'q_id':q.id}) }}" class="btn btn-info">View answers</a> 
+								<a href="{{ path("question_edit", {'id':q.id}) }}" class="btn btn-primary">Edit</a>  
+								<a href="#modal-{{ q.id }}" role="button" class="btn btn-danger" data-toggle="modal">Delete</a>
+								{% include "OmlookFaqBundle::delete_confirm.html.twig" with { "modal_id": "modal-"~q.id, "url": path("question_delete", {'id':q.id}) } %}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+		<div class="span12">
+			<a class="btn btn-primary" href="{{ path('question_create') }}">Add a new question</a>
+		</div>
+	</div>
+{% endblock %}

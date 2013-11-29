@@ -1,0 +1,74 @@
+omlook_faq_homepage:
+    pattern:  /
+    defaults: { _controller: OmlookFaqBundle:Default:index }
+    requirements: 
+        _method: GET
+
+faq_category:
+    pattern:  /category/{id}/list
+    defaults: { _controller: OmlookFaqBundle:Default:category, "id": "all" }
+    requirements: 
+        _method: GET
+
+
+
+# category
+category_index:
+    pattern: /categories-of-questions
+    defaults: { _controller: OmlookFaqBundle:Category:index }
+    requirements: 
+        _method: GET
+
+category_create:
+    pattern: /category/new
+    defaults: { _controller: OmlookFaqBundle:Category:create }
+
+category_edit:
+    pattern: /category/{id}/edit
+    defaults: { _controller: OmlookFaqBundle:Category:edit }
+
+category_delete:
+    pattern: /category/{id}/delete
+    defaults: { _controller: OmlookFaqBundle:Category:delete }
+
+# question
+question_index:
+    pattern: /questions
+    defaults: { _controller: OmlookFaqBundle:Question:index }
+    requirements: 
+        _method: GET
+
+question_view:
+    pattern: /question/{id}/view
+    defaults: { _controller: OmlookFaqBundle:Question:view }
+    requirements: 
+        _method: GET
+
+question_create:
+    pattern: /question/new
+    defaults: { _controller: OmlookFaqBundle:Question:create }
+
+question_edit:
+    pattern: /question/{id}/edit
+    defaults: { _controller: OmlookFaqBundle:Question:edit }
+
+question_delete:
+    pattern: /question/{id}/delete
+    defaults: { _controller: OmlookFaqBundle:Question:delete }
+
+# answer
+view_answers:
+    pattern: /question/{q_id}/answers/view
+    defaults: { _controller: OmlookFaqBundle:Answer:view }
+    
+answer_create:
+    pattern: /question/{q_id}/answer/new
+    defaults: { _controller: OmlookFaqBundle:Answer:create }
+
+answer_edit:
+    pattern: /question/{q_id}/answer/{a_id}/edit
+    defaults: { _controller: OmlookFaqBundle:Answer:edit }
+
+answer_delete:
+    pattern: /question/{q_id}/answer/{a_id}/delete
+    defaults: { _controller: OmlookFaqBundle:Answer:delete }

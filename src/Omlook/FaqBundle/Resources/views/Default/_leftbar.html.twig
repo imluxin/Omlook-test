@@ -1,0 +1,14 @@
+{% set cat_id = app.request.get('id') %}
+        
+<div class="span3">
+	<div class="well sidebar-nav">
+		<ul class="nav nav-list">
+			<li class="nav-header">Question category</li>
+			<li class="{% if cat_id == 'all' %}active{% endif %}"><a href="{{ path("faq_category", {'id':'all'}) }}">All</a></li>
+			{% for k, c in cats %}
+				<li class="{% if cat_id == c.id %}active{% endif %}"><a href="{{ path("faq_category", {'id':c.id}) }}">{{ c.name }}</a></li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+      

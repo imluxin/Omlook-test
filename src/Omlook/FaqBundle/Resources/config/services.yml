@@ -1,0 +1,22 @@
+parameters:
+#    omlook_faq.example.class: Omlook\FaqBundle\Example
+
+services:
+#    omlook_faq.example:
+#        class: %omlook_faq.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    request:
+        class:  Symfony\Component\HttpFoundation\Request
+    
+    lx.twig.lx_extension:
+        class: Omlook\FaqBundle\Twig\LxExtension
+        arguments: [ @request ]
+        tags:
+            - { name: twig.extension }
+            
+    gedmo.listener.timestampable:
+        class: Gedmo\Timestampable\TimestampableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ @annotation_reader ] ]

@@ -1,0 +1,4 @@
+omlook_faq:
+    resource: "@OmlookFaqBundle/Resources/config/routing.yml"
+    prefix:   /
+

@@ -1,0 +1,56 @@
+{% extends '::base.html.twig' %}
+{% set cat_id = app.request.get('id') %}
+{% block title %}{{ cat_name }} - Category{% endblock %}
+
+{% block left_bar %}
+	{% include "OmlookFaqBundle:Default:_leftbar.html.twig" with { 'cats': cats } %}
+{% endblock %}
+
+{% block right_bar %}
+	<div class="span9">
+		<h1>Questions of {{ cat_name }}</h1>
+		{% if qts is empty %}
+			<div class="alert">
+			  <strong>Warning!</strong> There is no question exist.
+			</div>
+		{% else %}
+			<div class="accordion" id="accordion2">
+				{% for k, q in qts if q.visible %}
+				  <div class="accordion-group">
+				    <div class="accordion-heading">
+				      <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{ q.id }}">
+				        {{ q.content }}
+				      	<span class="pull-right">{{ q.username }} - {{ q.updatedAt|date("Y-m-d H:i") }}</span>
+				      </a>
+				    </div>
+				    <div id="{{ q.id }}" class="accordion-body collapse">
+				      <div class="accordion-inner">
+				      	{% if q.answers is empty %}
+				      		<div class="alert alert-danger">
+				      			No answer exists.
+				      		</div>
+				      	{% else %}
+					        {% for k, a in q.answers if a.visible %}
+					        	<div class="alert alert-info">
+					        		{{ a.content }}
+					        		<hr>
+					        		<div class="text-right">{{ a.username }} - {{ a.updatedAt|date("Y-m-d H:i") }}</div>
+					        	</div>
+					        {% endfor %}
+					        <script type="text/javascript">
+								$(document).ready(function(){
+									len = $("#{{ q.id }} .alert-info").length;
+									if (len == '0'){
+										$("#{{ q.id }} .accordion-inner").append("<div class='alert alert-danger'>No answer exists.</div>");
+									}
+								});
+					        </script>
+				        {% endif %}
+				      </div>
+				    </div>
+				  </div>
+				{% endfor %}
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

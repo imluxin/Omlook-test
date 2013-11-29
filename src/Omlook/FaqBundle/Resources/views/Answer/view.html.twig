@@ -1,0 +1,84 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}View answers{% endblock %}
+
+{% block left_bar %}
+	<div class="span12">
+		<h1>View answers</h1>
+		
+		<h3>Questions info:</h3>
+		<table class="table table-bordered">
+			<tr>
+				<th class="span2">Question</th>
+				<td>{{ qt.content }}</td>
+			</tr>
+			<tr>
+				<th class="span2">Category</th>
+				<td>{{ qt.category }}</td>
+			</tr>
+			<tr>
+				<th class="span2">Visible</th>
+				<td>{% include "OmlookFaqBundle::visible.html.twig" with { 'visible': qt.visible } %}</td>
+			</tr>
+			<tr>
+				<th class="span2">Username</th>
+				<td>{{ qt.username }}</td>
+			</tr>
+			<tr>
+				<th class="span2">User email</th>
+				<td>{{ qt.useremail }}</td>
+			</tr>
+			<tr>
+				<th class="span2">Created at</th>
+				<td>{{ qt.createdAt|date("Y-m-d H:i") }}</td>
+			</tr>
+			<tr>
+				<th class="span2">Updated at</th>
+				<td>{{ qt.updatedAt|date("Y-m-d H:i") }}</td>
+			</tr>
+		</table>
+		
+		<h3>Answers info:</h3>
+		
+		{% if aws is empty %}
+			<div class="alert">
+			  <strong>Warning!</strong> There is no answer exist.
+			</div>
+		{% else %}
+			{% for message in app.session.flashbag.get('aw_success') %}
+				<div class="alert alert-success">
+				  <button type="button" class="close" data-dismiss="alert">&times;</button>
+				  <strong>Well done!</strong> {{ message }}
+				</div>
+			{% endfor %}
+			
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>Answer</th>
+						<th>Username</th>
+						<th>Visible</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for k, a in aws %}
+						<tr>
+							<td>{{ a.content }}</td>
+							<td>{{ a.username }}</td>
+							<td>{% include "OmlookFaqBundle::visible.html.twig" with { 'visible': a.visible } %}</td>
+							<td>
+								<a href="{{ path("answer_edit", {'q_id': qt.id,  'a_id':a.id}) }}" class="btn btn-primary">Edit</a> 
+								<a href="#modal-{{ a.id }}" role="button" class="btn btn-danger" data-toggle="modal">Delete</a>
+								{% include "OmlookFaqBundle::delete_confirm.html.twig" with { "modal_id": "modal-"~a.id, "url": path("answer_delete", {'q_id': qt.id,  'a_id':a.id}) } %}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+		<div class="span12">
+			<a class="btn btn-primary" href="{{ path('answer_create', {'q_id': qt.id}) }}">Add a new answer</a>
+			<a class="btn btn-inverse" href="{{ path('question_index') }}">Back to questions list</a>
+		</div>
+	</div>
+{% endblock %}
